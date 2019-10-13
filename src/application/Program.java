@@ -11,9 +11,26 @@ import db.DBException;
 public class Program {
 
 	public static void main(String[] args) {
+
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
 		
-		Connection conn = DB.getConnection();
-		System.out.println("connection stablished successfully");
-		DB.closeConnection();
+		try {
+			conn = DB.getConnection();
+			st = conn.createStatement();
+			rs = st.executeQuery("SELECT * FROM department");
+			
+			while (rs.next()) {
+				System.out.println(rs.getInt("Id") + ", " + rs.getString("Name"));
+			}
+			
+		} catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		} finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+			DB.closeConnection();
+		}
 	}
 }

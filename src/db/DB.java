@@ -45,4 +45,24 @@ public class DB {
 			throw new DBException(e.getMessage());
 		}
 	}
+	
+	public static void closeStatement(Statement st) {
+		if (st != null) {
+			try {
+				st.close();
+			} catch (SQLException e) {
+				throw new DBException(e.getMessage());
+			}
+		}
+	}
+	
+	public static void closeResultSet(ResultSet rs) {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				throw new DBException(e.getMessage());
+			}
+		}
+	}
 }
